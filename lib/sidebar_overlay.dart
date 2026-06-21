@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sidebar_overlay_example/sidebar/normal_sidebar.dart';
+import 'package:flutter_sidebar_overlay_example/sidebar/resizable_sidebar.dart';
 
 class SidebarOverlay extends StatelessWidget {
   final VoidCallback onClose;
+  final bool canBeResized;
   final Widget? content;
-  const SidebarOverlay({super.key, required this.onClose, this.content});
+  const SidebarOverlay({super.key, required this.onClose, this.content, this.canBeResized = false});
 
   final _sidebarWidth = 400.0;
 
@@ -20,26 +23,9 @@ class SidebarOverlay extends StatelessWidget {
         builder: (context, slideValue, child) {
           return Transform.translate(offset: Offset(slideValue, 0), child: child);
         },
-        child: Container(
-          width: _sidebarWidth,
-          color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                height: 80,
-                color: Colors.orange,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Sidebar'),
-                    IconButton(onPressed: onClose, icon: const Icon(Icons.close)),
-                  ],
-                ),
-              ),
-              Expanded(child: SingleChildScrollView(child: content ?? SizedBox())),
-            ],
-          ),
-        ),
+        child: canBeResized
+            ? ResizableSidebar(onSidebarHeaderCloseTap: onClose, content: content, initialSidebarWidth: _sidebarWidth)
+            : NormalSidebar(onHeaderCloseTap: onClose, content: content, sidebarWidth: _sidebarWidth),
       ),
     );
   }

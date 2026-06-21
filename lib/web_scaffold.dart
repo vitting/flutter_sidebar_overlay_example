@@ -9,12 +9,14 @@ class WebScaffold extends StatefulWidget {
   final Widget? floatingSidebarContent;
   final OverlayPortalController? sidebarController;
   final bool showSidebarPageOverlay;
+  final bool sidebarCanBeResized;
   const WebScaffold({
     super.key,
     required this.content,
     this.floatingSidebarContent,
     this.sidebarController,
     this.showSidebarPageOverlay = true,
+    this.sidebarCanBeResized = false,
   });
 
   @override
@@ -54,7 +56,11 @@ class _WebScaffoldState extends State<WebScaffold> {
                               return Stack(
                                 children: [
                                   if (widget.showSidebarPageOverlay) BackgroundOverlay(onTap: _sidebarController.hide),
-                                  SidebarOverlay(onClose: _sidebarController.hide, content: widget.floatingSidebarContent),
+                                  SidebarOverlay(
+                                    onClose: _sidebarController.hide,
+                                    content: widget.floatingSidebarContent,
+                                    canBeResized: widget.sidebarCanBeResized,
+                                  ),
                                 ],
                               );
                             },

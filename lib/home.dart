@@ -11,6 +11,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final _sidebarController = OverlayPortalController();
   bool _showSidebarPageOverlay = true;
+  bool _sidebarCanBeResized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,17 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
+          Material(
+            child: SwitchListTile(
+              title: Text('Sidebar can be resized'),
+              value: _sidebarCanBeResized,
+              onChanged: (value) {
+                setState(() {
+                  _sidebarCanBeResized = value;
+                });
+              },
+            ),
+          ),
           ElevatedButton(
             onPressed: () {
               _sidebarController.toggle();
@@ -40,6 +52,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+      sidebarCanBeResized: _sidebarCanBeResized,
       floatingSidebarContent: ListView.separated(
         itemCount: 50,
         shrinkWrap: true,
