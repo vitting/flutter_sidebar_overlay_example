@@ -55,14 +55,21 @@ class _WebScaffoldState extends State<WebScaffold> {
                                   if (widget.showSidebarPageOverlay)
                                     GestureDetector(
                                       onTap: _sidebarController.hide,
-                                      child: Container(color: Colors.black.withAlpha(100)),
+                                      child: TweenAnimationBuilder<double>(
+                                        tween: Tween(begin: 0, end: 1),
+                                        duration: const Duration(milliseconds: 250),
+                                        curve: Curves.easeOutCubic,
+                                        builder: (context, opacityValue, child) {
+                                          return Container(color: Colors.black.withAlpha(100));
+                                        },
+                                      ),
                                     ),
                                   Positioned(
                                     right: 0,
                                     top: 80,
                                     bottom: 0,
                                     child: TweenAnimationBuilder<double>(
-                                      tween: Tween(begin: _sidebarWidth, end: 0), // Slides from right to left
+                                      tween: Tween(begin: _sidebarWidth, end: 0),
                                       duration: const Duration(milliseconds: 250),
                                       curve: Curves.easeOutCubic,
                                       builder: (context, slideValue, child) {

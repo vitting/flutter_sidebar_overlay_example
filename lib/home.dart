@@ -21,14 +21,16 @@ class _HomeState extends State<Home> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Content'),
-          SwitchListTile(
-            title: Text('Show page overlay when sidebar is open'),
-            value: _showSidebarPageOverlay,
-            onChanged: (value) {
-              setState(() {
-                _showSidebarPageOverlay = value;
-              });
-            },
+          Material(
+            child: SwitchListTile(
+              title: Text('Show page overlay when sidebar is open'),
+              value: _showSidebarPageOverlay,
+              onChanged: (value) {
+                setState(() {
+                  _showSidebarPageOverlay = value;
+                });
+              },
+            ),
           ),
           ElevatedButton(
             onPressed: () {
