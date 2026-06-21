@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sidebar_overlay_example/background_overlay.dart';
 import 'package:flutter_sidebar_overlay_example/menu.dart';
+import 'package:flutter_sidebar_overlay_example/sidebar_overlay.dart';
 import 'package:flutter_sidebar_overlay_example/topbar.dart';
 
 class WebScaffold extends StatefulWidget {
@@ -20,7 +22,6 @@ class WebScaffold extends StatefulWidget {
 }
 
 class _WebScaffoldState extends State<WebScaffold> {
-  final _sidebarWidth = 400.0;
   late final OverlayPortalController _sidebarController;
 
   @override
@@ -52,56 +53,8 @@ class _WebScaffoldState extends State<WebScaffold> {
                             overlayChildBuilder: (context) {
                               return Stack(
                                 children: [
-                                  if (widget.showSidebarPageOverlay)
-                                    GestureDetector(
-                                      onTap: _sidebarController.hide,
-                                      child: TweenAnimationBuilder<double>(
-                                        tween: Tween(begin: 0, end: 0.4),
-                                        duration: const Duration(milliseconds: 250),
-                                        curve: Curves.easeOutCubic,
-                                        builder: (context, opacityValue, child) {
-                                          return Opacity(
-                                            opacity: opacityValue,
-                                            child: Container(color: Colors.black),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 80,
-                                    bottom: 0,
-                                    child: TweenAnimationBuilder<double>(
-                                      tween: Tween(begin: _sidebarWidth, end: 0),
-                                      duration: const Duration(milliseconds: 250),
-                                      curve: Curves.easeOutCubic,
-                                      builder: (context, slideValue, child) {
-                                        return Transform.translate(offset: Offset(slideValue, 0), child: child);
-                                      },
-                                      child: Container(
-                                        width: _sidebarWidth,
-                                        color: Colors.white,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              height: 80,
-                                              color: Colors.orange,
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  const Text('Sidebar'),
-                                                  IconButton(onPressed: _sidebarController.hide, icon: const Icon(Icons.close)),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: SingleChildScrollView(child: widget.floatingSidebarContent ?? SizedBox()),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  if (widget.showSidebarPageOverlay) BackgroundOverlay(onTap: _sidebarController.hide),
+                                  SidebarOverlay(onClose: _sidebarController.hide, content: widget.floatingSidebarContent),
                                 ],
                               );
                             },
