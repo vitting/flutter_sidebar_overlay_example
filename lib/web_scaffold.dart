@@ -56,11 +56,14 @@ class _WebScaffoldState extends State<WebScaffold> {
                                     GestureDetector(
                                       onTap: _sidebarController.hide,
                                       child: TweenAnimationBuilder<double>(
-                                        tween: Tween(begin: 0, end: 1),
+                                        tween: Tween(begin: 0, end: 0.4),
                                         duration: const Duration(milliseconds: 250),
                                         curve: Curves.easeOutCubic,
                                         builder: (context, opacityValue, child) {
-                                          return Container(color: Colors.black.withAlpha(100));
+                                          return Opacity(
+                                            opacity: opacityValue,
+                                            child: Container(color: Colors.black),
+                                          );
                                         },
                                       ),
                                     ),
